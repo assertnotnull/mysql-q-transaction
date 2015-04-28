@@ -1,0 +1,23 @@
+{
+  "name": "mysql-q-transaction",
+  "version": "0.1.0",
+  "repository": "assertnotnull/mysql-q-promises",
+  "description": "Wraps MySQL transaction in Q promises",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Requires MySQL for testing\" && exit 1"
+  },
+  "keywords": [
+    "mysql",
+    "q",
+    "promises",
+    "transaction"
+  ],
+  "author": "Patrice Gauthier",
+  "license": "---",
+  "dependencies": {
+    "debug": "^2.1.3",
+    "mysql": "^2.6.2",
+    "q": "^1.2.0"
+  }
+}
