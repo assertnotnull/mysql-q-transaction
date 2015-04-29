@@ -3,7 +3,7 @@
 Wraps transactional queries in Q promises
 
 ## Install
-coming...
+```npm install mysql-q-transaction```
 
 ## How to use
 ```js
@@ -12,7 +12,7 @@ var connection = mysql.createConnection();
 
 var myQuery = function(connection) {
     return Q.promise(function(resolve, reject) {
-        conn.query(someQuery, [], function(err, result) {
+        connection.query(someQuery, [], function(err, result) {
             if (err) {
                 reject(err);
             } else {
@@ -24,7 +24,7 @@ var myQuery = function(connection) {
 
 var secondOne = function(connection) {
     return Q.promise(function(resolve, reject) {
-        conn.query(someQuery, [], function(err, result) {
+        connection.query(someQuery, [], function(err, result) {
             if (err) {
                 reject(err);
             } else {
@@ -53,3 +53,7 @@ transaction.startTransaction(
     ...
 });
 ```
+
+
+## How to test
+Since it's a simple tool for transactions it requires an installed MySQL for tests.
