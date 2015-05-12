@@ -47,6 +47,7 @@ var tearDown = function(conn) {
 
 var promiseOne = function(conn) {
     return Q.promise(function(resolve, reject) {
+        console.log('exec query1');
         conn.query('insert into test (value) values ("text")', [], function(err, result) {
             if (err) {
                 debug(err);
@@ -61,11 +62,13 @@ var promiseOne = function(conn) {
 
 var promiseTwo = function(conn) {
     return Q.promise(function(resolve, reject) {
+        console.log('exec query2');
         conn.query('insert into test (value) values ("text2")', [], function(err, result) {
             if (err) {
                 debug(err);
                 reject(err);
             } else {
+                debug('exec query2');
                 debug(result);
                 resolve();
             }
@@ -94,7 +97,7 @@ var doSomethingAfterRollback = function() {
 describe('transaction', function() {
     describe('commit', function() {
         it('should commit when all queries are good', function (done) {
-            qtransactions.startTransaction(conn, [promiseOne(conn), promiseTwo(conn)])
+            qtransactions.startTransaction(conn, function() { return [promiseOne(conn), promiseTwo(conn)]})
             .then(function(result) {
                 debug('success');
                 assert(true);
@@ -107,7 +110,7 @@ describe('transaction', function() {
     });
     describe('rollback', function() {
         it('should rollback when one query fails', function (done) {
-            qtransactions.startTransaction(conn, [promiseOne(conn), promiseThreeFail(conn)])
+            qtransactions.startTransaction(conn, function() { return [promiseOne(conn), promiseThreeFail(conn)]})
             .then(function(result) {
 
             }).catch(function(err) {
@@ -119,7 +122,7 @@ describe('transaction', function() {
     })
     describe('rollback manually', function() {
         it('should do nothing when transaction fails', function (done) {
-            qtransactions.startTransaction(conn, [promiseOne(conn), promiseThreeFail(conn)], true)
+            qtransactions.startTransaction(conn, function() { return [promiseOne(conn), promiseThreeFail(conn)]}, true)
             .then(function(result) {
             }).catch(function(err) {
                 debug('error in one query', err.error);

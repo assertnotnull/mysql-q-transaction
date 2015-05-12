@@ -37,7 +37,7 @@ var secondOne = function(connection) {
 
 transaction.startTransaction(
     connection, // the current connection
-    [myQuery(connection), secondOne(connection)], //required
+    function() { return [myQuery(connection), secondOne(connection)] }, //required callback
     manuallyRollbackFlag //optional - disable automaticRollback
 );
 ```
@@ -47,7 +47,7 @@ transaction.startTransaction(
 ```js
 transaction.startTransaction(
     connection, // the current connection
-    [myQuery(connection), secondOne(connection)], //required
+    function() { return [myQuery(connection), secondOne(connection)] }, //required callback
     manuallyRollbackFlag //optional - disable automaticRollback
 ).then(function() {
     ...

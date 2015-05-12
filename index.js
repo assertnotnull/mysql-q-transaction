@@ -10,6 +10,7 @@ module.exports = {
      * @param manuallyRollback disable the automatic rollback
      * @returns {*|promise}
      */
+
     startTransaction: function (conn, promises, manuallyRollback) {
         var deferred = Q.defer();
         conn.beginTransaction(function (err) {
@@ -18,7 +19,7 @@ module.exports = {
                 debug(err);
                 deferred.reject(err);
             } else {
-                Q.all(promises)
+                Q.all(promises())
                     .done(function (results) {
                         debug('transaction done');
                         conn.commit(function (err) {
