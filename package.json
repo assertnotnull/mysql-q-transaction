@@ -1,6 +1,6 @@
 {
   "name": "mysql-q-transaction",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "repository": "assertnotnull/mysql-q-transaction",
   "description": "Wraps MySQL transaction in Q promises",
   "main": "index.js",
